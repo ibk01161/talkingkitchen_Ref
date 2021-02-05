@@ -1,0 +1,16 @@
+- Gradle 다운 => GRADLE_HOME으로 환경변수 맞춰주기 (bin 전 경로까지) => 사용자 변수 중 Path에서 %GRADLE_HOME%\bin 추가
+- Spring Starter Project 생성
+- build.gradle에서 
+
+bootRun {
+    jvmArgs = ["-Dfile.encoding=UTF-8", "-Duser.timezone=GMT+09:00"]
+}
+
+war {
+	enabled = true
+	archiveVersion = "1.0-" + new Date().format('yyyyMMdd-HHmmss')
+}
+
+설정 추가
+
+- 필요 라이브러리 추가
