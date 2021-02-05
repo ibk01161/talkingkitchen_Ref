@@ -1,0 +1,59 @@
+* Spring boot + Gradle + Mysql 프로젝트 생성 (JPA는 나중에...)
+
+* 테이블, 컬럼명 바꾸기																											----------------------- 완료
+
+* Gradle 6.6.1 버전 다운 => GRADLE_HOME으로 환경변수 맞춰주기 (bin 전 경로까지) => 사용자 변수 중 Path에서 %GRADLE_HOME%\bin 추가		----------------------- 완료
+
+* sts 설정 다시 맞추기																											----------------------- 완료
+
+
+* 라이브러리 정리 (pom.xml -> build.gradle로 바꾸기)
+- lombok 사용
+
+** dependency
+- org.springframework.spring-context
+- org.springframework.spring-webmvc
+- org.springframework.spring-jdbc
+- org.springframework.spring-tx
+- org.springframework.spring-aop
+- org.springframework.spring-test
+- org.aspectj.aspectjrt
+- org.slf4j.slf4j-api
+- org.slf4j.jcl-over-slf4j
+- org.slf4j.slf4j-log4j12
+- log4j.log4j_1.2.15
+- javax.inject.javax.inject_1
+- javax.servlet.javax.servlet-api_3.1.0
+- javax.servlet.jsp.jsp-api_2.1
+- javax.servlet.jstl_1.2
+- junit.junit_4.12
+- commons-codec.commons-codec_1.11
+- org.lazyluke.log4jdbc-remix_0.2.7
+- org.mybatis.mybatis_3.4.6
+- org.mybatis.mybatis-spring_1.3.2
+- com.fasterxml.jackson.core.jackson-databind_2.8.4
+- org.imgscalr.imgscalr-lib_4.2
+- commons-fileupload.commons-fileupload_1.3.3
+- mysql.mysql-connector-java_5.1.40
+- org.webjars.jquery_3.3.1-1
+- org.webjars.bootstrap_4.1.3
+- org.webjars.jquery-ui_1.12.1
+- com.ibm.watson.developer_cloud_java-sdk_6.5.1
+
+
+* 패키지 : net.lnno2.talkingkitchen
+
+
+* Gradle 알아보기 (build.gradle 설정)
+
+
+* 새로운 설정 넣기 (log, properties, Constans나 Config 설정 등)
+
+* 로그 폴더 만들어 보기
+
+* jsp 폴더 나누기 (ex : 공통적인 css, jsp 등)
+
+
+
+
+* 기능 고민....
