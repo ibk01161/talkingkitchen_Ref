@@ -16,7 +16,7 @@
 - org.springframework.spring-jdbc        --------------------  v
 - org.springframework.spring-tx          --------------------  v
 - org.springframework.spring-aop         --------------------  v
-- org.springframework.spring-test 		 -------------------- 필	요시 추가 (미적용으로 되어있음?)
+- org.springframework.spring-test 		 -------------------- 필	요시 추가
 - org.aspectj.aspectjrt					 -------------------- aop 설정시 추가 ---- v
 - org.slf4j.slf4j-api					 --------------------  v
 
@@ -24,15 +24,16 @@
 - org.slf4j.slf4j-log4j12				 --------------------  로그 관련...
 - log4j.log4j_1.2.15					 --------------------  로그 관련...
 
-- javax.inject.javax.inject_1			 --------------------  의존성 관련..
+- javax.inject.javax.inject_1			 --------------------  @inject 의존성 관련..
 
 - javax.servlet.javax.servlet-api_3.1.0  --------------------  jsp 사용시 추가
 - javax.servlet.jsp.jsp-api_2.1			 --------------------  jsp 사용시 추가
-- javax.servlet.jstl_1.2				 --------------------  jsp 사용시 추가
+- javax.servlet.jstl_1.2				 --------------------  jsp 사용시 추가 ----- v
 
-- junit.junit_4.12						 --------------------  필요시 추가 (test)
+- junit.junit_4.12						 --------------------  필요시 추가 (test) ----- v
 
 - commons-codec.commons-codec_1.11		 --------------------  Base64나 Hex 포맷 등으로 변환을 지원하는 라이브러리 ---- v
+- commons-codec.commons-io		 		 --------------------  v
 
 - org.lazyluke.log4jdbc-remix_0.2.7		 --------------------  쿼리 로그 출력 라이브러리 (log4j2-jdbc4 사용하면 될듯?)
 
@@ -40,8 +41,8 @@
 - org.mybatis.mybatis-spring_1.3.2		  				---------------------------------------- v
 - com.fasterxml.jackson.core.jackson-databind_2.8.4 	---------------------------------------- v
 
-- org.imgscalr.imgscalr-lib_4.2 : 						--------------------- 파일업로드 (썸네일)  라이브러리
-- commons-fileupload.commons-fileupload_1.3.3 :  		--------------------- 파일업로드 라이브러리
+- org.imgscalr.imgscalr-lib_4.2 : 						--------------------- 파일업로드 (썸네일)  라이브러리 ---- v
+- commons-fileupload.commons-fileupload_1.3.3 :  		--------------------- 파일업로드 라이브러리 ------------- v
 
 - mysql.mysql-connector-java_5.1.40				  		---------------------------------------- v
 
@@ -66,7 +67,6 @@ org.bgee.log4jdbc-log4j2:log4jdbc-log4j2-jdbc4.1:1.16 : jdbc 로그 관련 라�
 * 로그 폴더 만들어 보기
 
 * jsp 폴더 나누기 (ex : 공통적인 css, jsp 등)
-
 
 
 

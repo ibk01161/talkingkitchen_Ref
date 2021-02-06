@@ -1,6 +1,6 @@
-* Gradle 다운 => GRADLE_HOME으로 환경변수 맞춰주기 (bin 전 경로까지) => 사용자 변수 중 Path에서 %GRADLE_HOME%\bin 추가
-* Spring Starter Project 생성
-* build.gradle에서 
+# Gradle 다운 => GRADLE_HOME으로 환경변수 맞춰주기 (bin 전 경로까지) => 사용자 변수 중 Path에서 %GRADLE_HOME%\bin 추가
+# Spring Starter Project 생성
+# build.gradle 설정 추가
 
 bootRun {
     jvmArgs = ["-Dfile.encoding=UTF-8", "-Duser.timezone=GMT+09:00"]
@@ -11,15 +11,40 @@ war {
 	archiveVersion = "1.0-" + new Date().format('yyyyMMdd-HHmmss')
 }
 
-설정 추가
 
-* 필요 라이브러리 추가
+# 필요 라이브러리 추가
 
-* DB 연동
-- application.properties에서 DB 설정 추가
+# DB 연동
+* application.properties에서 DB 설정 추가
 spring.datasource.driver-class-name=com.mysql.cj.jdbc.Driver
 spring.datasource.url=jdbc:mysql://127.0.0.1:3306/{$schema_name}?useSSL=false&serverTimezone=Asia/Seoul
 spring.datasource.username={$username}
 spring.datasource.password={$password}
+
+# Spring boot에서 jsp 파일 사용 가능하게 설정
+* jstl, jasper 라이브러리 추가
+* application.properties에 설정 추가
+spring.mvc.view.prefix=/WEB-INF/views/
+spring.mvc.view.suffix=.jsp
+
+# jsp 폴더 경로 만들기
+main/webapp/WEB-INF/views
+
+# java 파일로 Config 설정 파일 만들기
+
+* 의존성 주입
+- 스프링은 클래스에서 객체를 생성하고, 객체들의 의존성에 대한 처리 작업까지 내부에서 모든 것이 처리됨
+- 스프링에서 관리되는 객체를 '빈(Bean)' 이라고 하고, 이에 대한 설정은 XML과 Java 를 이용해서 처리할 수 있음
+- 기존 시스템은 XML을 선호하지만, 최근에는 Java를 이용하는 설정도 많이 사용되고 있음
+
+1) config 패키지에서 RootConfig 클래스 생성 (RootConfig 클래스는 스프링이 동작하면서 필요한 객체들을 생성하는 역할을 함)
+- @Configuration : 스프링 프레임워크가 동작하면서 RootConfig 클래스가 스프링 내에 객체(빈) 들을 설정한 정보를 가지고 있다는 것을 표시
+- @ComponentScan : basePackages라는 속성값을 이용해 domain 패키지의 클래스들을 조사
+
+
+
+
+# MyBatis 연동 설정
+
 
 
