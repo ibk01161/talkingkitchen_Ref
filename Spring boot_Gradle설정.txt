@@ -81,3 +81,14 @@ main/webapp/WEB-INF/views
 
 
 
+=======================================================================================================
+# GitHub에 프로젝트 올리기
+1) github에 로그인 후 프로젝트 생성
+2) 원하는 프로젝트 경로로 이동
+3) git init
+4) git status 후 git add .
+5) git commit -m "[commit message]"
+6) 자신이 올릴 깃 repository 주소 복사 후 git remote add origin [repository주소]
+7) repository저장소와 연결 확인 (git remote -v)
+8) git push origin master (프로젝트 git 프로젝트에 push)
+=======================================================================================================
