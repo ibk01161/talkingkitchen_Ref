@@ -30,6 +30,11 @@ spring.mvc.view.suffix=.jsp
 # jsp 폴더 경로 만들기
 main/webapp/WEB-INF/views
 
+### java -> Editor 설정 알아보기
+** Content Assist => Advenced
+** Templetes
+** Save Actions
+
 # java 파일로 Config 설정 파일 만들기
 
 * 의존성 주입
@@ -40,6 +45,34 @@ main/webapp/WEB-INF/views
 1) config 패키지에서 RootConfig 클래스 생성 (RootConfig 클래스는 스프링이 동작하면서 필요한 객체들을 생성하는 역할을 함)
 - @Configuration : 스프링 프레임워크가 동작하면서 RootConfig 클래스가 스프링 내에 객체(빈) 들을 설정한 정보를 가지고 있다는 것을 표시
 - @ComponentScan : basePackages라는 속성값을 이용해 domain 패키지의 클래스들을 조사
+
+
+
+
+
+
+
+# DB 연동
+1) JDBC 연동 후 테스트 코드 작성 (Gradle tasks => build 시 에러) (JDBCTest.java)
+- JDBC 연결을 하려면 JDBC Driver가 필요
+- JDBC 드라이버가 추가되었으면, 데이터베이스의 연결을 확인할 수 있게 테스트 코드 작성
+- 스프링 설정 전 우선 Java와 JDBC 드라이버만을 이용해 테스트
+- 데이터베이스 연결이 가능하다면 정상적으로 데이터베이스가 연결된 Connection 객체가 출력됨
+
+2) 데이터베이스와 DataSource (RootConfig.java)
+- 일반적으로 여러 명의 사용자를 동시에 처리해야 하는 웹 애플리케이션의 경우 데이터베이스 연결을 이용할 때는 '커넥션 풀(Connection Pool)'을 이용하므로, 스프링에 커넥션 풀을 등록햇 사용하는 것이 좋음
+- Java 에서는 DataSource 라는 인터페이스를 통해 커넥션 풀을 사용
+- DataSource 를 통해 매번 데이터베이스와 연결을 하는 방식이 아닌, 미리 연결을 맺어주고 반환하는 구조를 이용하여 성능 향상을 꾀함
+- 커넥션 풀을 여러 종류가 있고, spring-jdbc 라이브러리를 이용하는 방식도 있지만, 최근 유행하는 HikariCP를 이용
+- HikariCP는 스프링 부트 2.0 에서도 사용될 만큼 최근에 많이 사용되는 라이브러리
+- HikariCP 라이브러리와 SLF4J 라이브러리와 같이 사용되므로, SLF4j 라이브러리 추가
+- HikariCP에 대한 정보를 스프링에 등록하기 위해 XML을 이용할 수 있지만, 이전 예제에서 만들어둔 RootConfig를 이용해 HikariCP를 추가
+- 선언된 메소드의 @Bean은 해당 메소드의 결과를 빈(객체)으로 등록할 때 사용하는 어노테이션
+- dataSource()의 리턴 타입은 DataSource 타입이고, 내부적으로 HikariDataSource 타입의 객체를 생성해서 반환하게 됨
+- DataSource는 javax.sql 패키지에 포함되며, java 기반의 커넥션 풀들은 DataSource 인터페이스를 구현한 구현체임
+- RootConfig에 추가한 DataSource 설정이 제대로 동작하는지 확인하는 작업 테스트하기
+
+
 
 
 
