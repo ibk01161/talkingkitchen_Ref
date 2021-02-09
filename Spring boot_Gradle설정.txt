@@ -53,6 +53,7 @@ main/webapp/WEB-INF/views
 
 
 # DB 연동
+
 1) JDBC 연동 후 테스트 코드 작성 (Gradle tasks => build 시 에러) (JDBCTest.java)
 - JDBC 연결을 하려면 JDBC Driver가 필요
 - JDBC 드라이버가 추가되었으면, 데이터베이스의 연결을 확인할 수 있게 테스트 코드 작성
@@ -86,7 +87,8 @@ main/webapp/WEB-INF/views
 	    MyBatis 내부적으로 PreparedStatement 처리 #{prop}와 같이 속성을 지정하면 내부적으로 자동으로 처리
 	    리턴 타입을 지정하는 경우 자동으로 객체 생성 및 ResultSet 처리
 
-* 설정
+# MyBatis 설정 및 연동
+
 1) MyBatis 관련 라이브러리 추가
 - mybatis, mybatis-spring : MyBatis와 스프링 연동용 라이브러리
 - spring-tx, spring-jdbc : 스프링에서 데이터베이스 처리와 트랜잭션 처리
@@ -127,6 +129,45 @@ main/webapp/WEB-INF/views
 
 6) 로그 레벨 설정
 - 테스트 코드를 실행하면 상당히 많은 양의 로그가 출력되기 때문에 개발 초기엔 좋지만 나중엔 불편해서 로그 레벨 수정 필요
+
+
+
+# 스프링 MVC 프로젝트의 내부구조
+
+- 예제에서 웹과 관련된 설정은 별도 ServletConfig 클래스 파일로 분리하고, RootConfig와 같이 분리된 구조 (Spring MVC - ServletConfig, Spring Core, MyBatis - RootConfig)
+- 스프링 MVC 프로젝트를 구성해서 사용한다는 의미로 내부적으로는 Rootconfig와 같은 기본적 설정에 웹과 관련된 설정 (ServletConfig) 을 추가시켜 동작한다는 의미
+- WebApplicationContext라는 존재는 기존 구조에 MVC 설정을 포함하는 구조로 만들어 짐
+
+* 과거 구조 (Spring Legacy Project)
+- 과거의 웹 애플리케이션은 web.xml을 이용해서 WebApplicationContext를 구동하는 방식 사용, WebApplicationContext 역시 web.xml 에서 서블릿의 listener를 이용해 구동시키는 방식으로 작성됨
+- web.xml에서 root-context.xml의 설정을 로딩하고, Servlet 설정에서 servlet-context.xml을 로딩하는 방식
+- Servlet 3.0 이상에서는 web.xml 대신 어노테이션 사용 가능, 스프링 MVC 역시 web.xml을 사용하는 대신 WebApplicationInitializer 라는 인터페이스를 구현하거나 하위 클래스를 이용해 web.xml을 대체
+
+=> web.xml -> WebcConfig클래스, servlet-context.xml -> ServletConfig클래스, root-context.xml -> RootConfig클래스
+
+* 차이점 (xml 방식 - 역할 - Java 설정 (Config))
+1) web.xml - WebApplicationContext의 로딩 및 스프링 MVC 설정, 일반 스프링 설정 로딩 - WebApplicationInitializer 인터페이스의 구현/하위 클래스 상속
+2) servlet-context.xml - 스프링 MVC의 고유 설정 - 별도의 Java 클래스로 구현 (ServletConfig 클래스)
+3) root-context.xml - 일반 스프링 객체들의 설정 - RootConfig 클래스로 처리
+
+
+# Java Config 전환
+
+- 스프링 MVC를 이용하기 위해 build.gradle 파일에 spring-webmvc 관련 라이브러리를 추가
+
+1) ServletConfig 클래스 작성 (웹과 관련된 설정)
+- ServletConfig 클래스는 기존 스프링 MVC 관련 기본적 설정을 추가 (WebMvcConfigurationSupport라는 클래스를 상속하는 형태로 구현)
+- WebMvcConfigurationSupport 클래스를 상속하는 것만으로 해당 클래스가 스프링 MVC관련 설정이라는 것을 명시 (경우에 따라서 @EnableWebMvc 라는 어노테이션을 지정하는 방식을 사용하기도 함)
+- 화면 처리하는 방식의 설정, 정적인 자원들의 기본 경로 지정 설정
+- 부모 클래스인 WebMvcConfigurationSupport의 여러 메소드들 중 mvcViewResolver()는 JSP나 Thymeleaf와 같은 View와 관련된 기술들을 어떻게 처리할 것인지 지정
+- addResourceHandlers()는 주로 이미지나 .js파일, .css파일과 같이 정적인 자원들의 경로를 지정하는 역할
+
+
+
+
+
+
+
 
 
 
