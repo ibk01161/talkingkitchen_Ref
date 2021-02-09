@@ -60,7 +60,7 @@ main/webapp/WEB-INF/views
 - 데이터베이스 연결이 가능하다면 정상적으로 데이터베이스가 연결된 Connection 객체가 출력됨
 
 2) 데이터베이스와 DataSource (RootConfig.java)
-- 일반적으로 여러 명의 사용자를 동시에 처리해야 하는 웹 애플리케이션의 경우 데이터베이스 연결을 이용할 때는 '커넥션 풀(Connection Pool)'을 이용하므로, 스프링에 커넥션 풀을 등록햇 사용하는 것이 좋음
+- 일반적으로 여러 명의 사용자를 동시에 처리해야 하는 웹 애플리케이션의 경우 데이터베이스 연결을 이용할 때는 '커넥션 풀(Connection Pool)'을 이용하므로, 스프링에 커넥션 풀을 등록해서 사용하는 것이 좋음
 - Java 에서는 DataSource 라는 인터페이스를 통해 커넥션 풀을 사용
 - DataSource 를 통해 매번 데이터베이스와 연결을 하는 방식이 아닌, 미리 연결을 맺어주고 반환하는 구조를 이용하여 성능 향상을 꾀함
 - 커넥션 풀을 여러 종류가 있고, spring-jdbc 라이브러리를 이용하는 방식도 있지만, 최근 유행하는 HikariCP를 이용
@@ -72,12 +72,36 @@ main/webapp/WEB-INF/views
 - DataSource는 javax.sql 패키지에 포함되며, java 기반의 커넥션 풀들은 DataSource 인터페이스를 구현한 구현체임
 - RootConfig에 추가한 DataSource 설정이 제대로 동작하는지 확인하는 작업 테스트하기
 
+3) HikariCP 테스트 (HikariCPTests.java => 실행안됨)
+- 테스트 클래스는 RootConfig를 이용해서 스프링 설정을 처리하고, 스프링의 빈으로 등록된 DataSource 타입의 객체를 주입받도록 설계
+- Lombok을 이용해서 Setter 메소드를 작성하고, @Autowired를 이용해서 주입
 
+4) MyBatis와 스프링 연동
+- 흔히 'SQL 매핑(mapping) 프레임워크' 로 분류되는데, JDBC 코드의 복잡하고 지루한 작업을 피하는 용도로 많이 사용
 
+* JDBC와 MyBatis의 차이점
+- JDBC : 직접 Connection을 맺고 마지막 close() PreparedStatement 직접 생성 및 처리 PreparedStatement의 setXX() 등에 대한 모든 작업을 개발자가 처리
+	 SELCT의 경우 직접 ResultSet 처리
+- MyBatis : 자동으로 Connection close() 가능
+	    MyBatis 내부적으로 PreparedStatement 처리 #{prop}와 같이 속성을 지정하면 내부적으로 자동으로 처리
+	    리턴 타입을 지정하는 경우 자동으로 객체 생성 및 ResultSet 처리
 
+* 설정
+1) MyBatis 관련 라이브러리 추가
+- mybatis, mybatis-spring : MyBatis와 스프링 연동용 라이브러리
+- spring-tx, spring-jdbc : 스프링에서 데이터베이스 처리와 트랜잭션 처리
 
+2) SQLSessionFactory (RootConfig.java)
+- MyBatis에서 가장 핵심적인 객체는 SQLSession 이라는 존재와 SQLSessionFactory
+- SQLSessionFactory의 이름에서 보듯이 내부적으로 SQLSession 이라는 것을 만들어 내는 존재, 개발시에는 SQLSession을 통해 원하는 SQL을 전달하고, 결과를 리턴 받는 구조로 작성
+- SQLSessionFactory 타입 자체는 MyBatis에 속하고 sqlSessionFactory()에서 사용하는 SqlSessionFactoryBean은 MyBatis-Spring 모듈에서 가져다가 사용하게 됨
+- SQLSessionFactory를 생성하기 위해 반드시 DataSource 타입의 객체가 필요한데, 위에 작성한 dataSource()를 이용
 
-# MyBatis 연동 설정
+3) 스프링과의 연동 처리
+- SQLSessionFactory를 이용해 코드를 작성해도 JDBC 처리가 가능하지만, 좀 더 편하게 작업하기 위해 SQL을 어떻게 처리할 것인지를 별도의 설정을 분리하고, 자동으로 처리되는 방식을 이용
+- MyBatis의 Mapper라는 존재를 작성
+- Mapper를 작성했다면 MyBatis가 동작할 때 Mapper를 인식할 수 있도록 설정 (Rootconfig.java)
+- Mapper 인터페이스는 별도 설정 없이 @MapperScan 어노테이션으로 Mapper 인터페이스가 존재하는 패키지 명을 지정해 주면 자동으로 Mapper 들을 스캔해 사용할 수 있으므로 별도 설정 없이 사용 가능
 
 
 
