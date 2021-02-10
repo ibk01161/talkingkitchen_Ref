@@ -162,13 +162,26 @@ main/webapp/WEB-INF/views
 - 부모 클래스인 WebMvcConfigurationSupport의 여러 메소드들 중 mvcViewResolver()는 JSP나 Thymeleaf와 같은 View와 관련된 기술들을 어떻게 처리할 것인지 지정
 - addResourceHandlers()는 주로 이미지나 .js파일, .css파일과 같이 정적인 자원들의 경로를 지정하는 역할
 
+2) web.xml 대신하기 (WebConfig.java 작성)
 
+* web.xml의 내용
+1) 스프링 설정 파일 위치 지정
+2) 스프링 설정 파일 로딩을 위한 리스너
+3) Front Controller 설정
+4) Front Controller에 대한 URL 설정
 
+- web.xml 없이 스프링 MVC를 구동하려면 스프링에서 제공하는 WebApplicationInitializer 인터페이스를 구현하거나 하위 클래스를 이용해야 함
+- 예제에서는 WebApplicationInitializer인터페이스를 구현한 클래스 중 AbstractAnnotationConfigDispatcherServletInitializer클래스 상속시켜 구현
+- AbstractAnnotationConfigDispatcherServletInitializer클래스는 추상클래스이므로 필요한 몇 개의 메소들를 재정의 해야함
+* 재정의해야할 메소드
+- 일반 스프링 설정 정보를 가진 클래스를 반환하는 getRootConfigclasses() => 리턴시 RootConfig.class를 반환
+- 스프링 MVC의 설정 클래스를 반환하는 getServletConfigClasses() => 리턴시 ServletConfig.class를 반환
+- Front Controller의 경로를 지정하는 getServletMappings() => '/'경로 이용
 
-
-
-
-
+# 스프링 컨트롤러 만들기
+- 컨트롤러를 스프링 MVC에서 빈(Bean)으로 인식하기 위해 ServletConfig 클래스를 이용해 @Controller 어노테이션을 인식하도록 수정
+- @ComponentScan은 RootConfig 클래스와 마찬가지로 해당 패키지의 내용을 스캔하면서 스프링 관련 어노테이션들이 적용된 클래스들을 찾아 스프링에 빈으로 등록하는 역할
+- jsp 설정 경로에 jsp 파일 생성 후 테스트
 
 
 
