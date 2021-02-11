@@ -70,4 +70,82 @@ org.bgee.log4jdbc-log4j2:log4jdbc-log4j2-jdbc4.1:1.16 : jdbc 로그 관련 라�
 
 
 
+* URL
+
+- 메인 
+{$context}
+
+- 로그인(화면)
+{$context}/user/login/		(GET)
+
+- 로그인(처리)
+{$context}/user/login/		(POST)
+
+- 회원가입 (화면)
+{$context}/user/regist/		(GET)
+
+- 회원가입 (처리)
+{$context}/user/regist/		(POST)
+
+- 로그아웃
+{$context}/user/logout/		(POST)
+
+
+
+- 레시피 리스트
+{$context}/recipe/{pg}	(GET)
+
+- 레시피 등록 (화면)
+{$context}/recipes/{pg}/insert	(GET)
+
+- 레시피 등록 (처리)
+{$context}/recipes/{pg}/insert	(POST)
+
+= 레시피 상세보기
+{$context}/recipes/{pg}/{rec_no}/	(GET)
+
+- 레시피 수정 (화면)
+{$context}/recipes/{pg}/{rec_no}/update	(GET)
+
+- 레시피 수정 (처리)
+{$context}/recipes/{pg}/{rec_no}/update	(POST)
+
+- 레시피 삭제 (화면)
+{$context}/recipes/{pg}/{rec_no}/delete	(GET)
+
+
+- 소개
+{$context}/introduce/			(GET)
+
+
+- 내주방
+{$context}/mykit/
+
+- 재료 넣기
+{$context}/mykit/popup_ing_add
+
+- 내 레시피
+{$context}/mykit/myreceipe
+
+- 스크랩
+{$context}/mykit/scrap
+
+
+
+- 회원정보
+{$context}/user/information		(GET)
+
+- 회원 수정 (화면)
+{$context}/user/information/modify	(GET)
+
+- 회원 수정 (처리)
+{$context}/user/information/modify	(POST)
+
+= 회원 탈퇴 (화면)
+{$context}/user/information/delete	(GET)
+
+
+
+
+
 * 기능 고민....

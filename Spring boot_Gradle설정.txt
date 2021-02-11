@@ -195,6 +195,56 @@ implementation 'org.junit.jupiter:junit-jupiter-params:5.3.1'
 - jsp 설정 경로에 jsp 파일 생성 후 테스트
 
 
+# 스프링 MVC Controller의 어노테이션
+- 스프링 MVC의 Controller들은 기본적으로 @Controller 또는 @RestController 어노테이션을 클래스 선언부에 지정
+- @Controler : 일반적인 웹을 구현하기 위한 어노테이션으로 JSP 등을 이용할 경우 사용
+- @RestController : 해당 클래스의 모든 메소드는 주로 XML이나 JSON과 같은 데이터를 처리하기 위해 사용
+
+* @RequestMapping 어노테이션
+- 프로젝트에서 생성하는 모든 Controller들은 @RequestMapping 이라는 어노테이션을 사용할 수 있음 (@RequestMapping을 클래스 선언부에 적용한다는 의미가 Controller의 기본 경로를 지정한다는 의미)
+- 클래스 선언부에 적용하는 경우는 폴더와 같은 개념으로 기본 경로로 동작, 메소드에 적용하는 경우는 파일과 같이 최종적인 경로가 됨
+
+* Controller 등록
+- 스프링 MVC에서 빈을 등록 (ServletConfig 클래스에 @ComponentScan을 이용)
+
+# Model 타입
+- Controller를 작성시 파라미터를 지정할 때 가장 중요한 용도는 전달되는 파라미터를 수집하거나 변환하는 일이지만, Model 이라는 특별한 파라미터를 지정하는 경우가 많음
+- Model은 전달되는 파라미터를 처리하기 위한 용도가 아니라 원하는 데이터를 View까지 전달하기 위한 용도
+- Model은 요청된 데이터가 아니라 서비스 객체등을 이용해 얻어내는 추가적인 데이터를 처리하기 위함임, 마지막 내용물을 Model에 담아서 전달하는 방식
+
+# Controller 메소드의 리턴 타입
+- Controller에서 작성하는 메소드의 리턴타입은 크게 void, String, 사용자 정의 객체 타입으로 볼 수 있음
+
+1) void를 사용하는 경우
+- 메소드의 리턴 타입을 void로 지정하게 되면 메소드를 호출하는 URL 경로에 맞는 JSP파일을 사용하게 됨
+- 보통 입력페이지와 같이 동일한 View를 이용하는 경우에 많이 사용
+
+2) String을 사용하는 경우
+- 처리 결과에 따라 View가 달라지는 경우 (ex: 로그인에 성공한 사용자와 로그인에 실패한 사용자가 보는 View가 달라질 필요가 있는 경우)
+- Controller의 기본 경로는 적용되지 않으므로 경로를 직접 문자열로 추가해 주어야함 (return "/sample/login")
+- String의 경우 'redirect', 'forward' 라는 특별한 접두사를 조금 다른 방식으로 동작하게 됨
+- 'redirect....'로 시작하는 경우는 내부적으로 response.sendRedirect()에 해당하는 동작을 수행하게 됨
+- 'forward:'는 기본적으로 URL은 고정되고, 서버의 내부에서 다른 URL을 호출하게 됨, 브라우저는 최종적인 결과만을 보기 때문에 redirect와 달리 브라우저는 한번에 결과만을 받게 됨
+
+3) RedirectAttributes
+- redirect 방식의 경우 항상 문제가 되는 것은 메소드에서 전달받은 파라미터를 다른 곳으로 전송하는데 문제가 있음
+- 예를 들어 '/sample/move2?id=aaa'와 같이 파라미터를 전달했을때 redirect 되면 id 파라미터는 제대로 전송되지 못하게 됨
+- 해결방법은 직접 URL 뒤에 문자열을 추가하거나, RedirectAttributes를 이용하면 좀 더 깔끔하게 처리할 수 있음
+- RedirectAttributes의 addAttribute()는 redirect 상황에서 파라미터를 자동으로 URL 뒤에 붙여주는 방식으로 동작
+- RedirectAttributes의 addFlashAttributes() 라는 메소드는 URL에는 보이지 않고, View에서만 처리가 가능한 메소드, 결과는 오직 View에서만 조회 가능
+
+
+# Controller의 Exception 처리
+
+
+
+## bootstrap, jQuery 세팅
+- 부트스트랩, jQuery 홈페이지에서 min.js 다운로드
+- 리소스 맵핑 하기 (ServletConfig 클래스에서 addResourceHandlers메소드 경로 설정)
+- resources 폴더 안에 넣고, <head>쪽에 <script src=""> 넣어주기 / css는 <link rel="stylesheet" href=""> 로 설정
+
+
+
 
 =======================================================================================================
 # GitHub에 프로젝트 올리기
