@@ -49,7 +49,18 @@ main/webapp/WEB-INF/views
 
 
 
+# JUnit5 설정
 
+- 스프링 부트 스타터 (boot-starter-test)는 junit4에 대한 의존성을 가지고 있기 때문에 junit 제외
+=> implementation ('org.springframework.boot:spring-boot-starter-test') {
+		exclude module: 'junit'
+	}
+
+- junit5에 대한 의존성 추가
+implementation 'org.junit.jupiter:junit-jupiter-api:5.3.1'
+implementation 'org.junit.jupiter:junit-jupiter-engine:5.3.1'
+implementation 'org.junit.vintage:junit-vintage-engine:5.3.1'
+implementation 'org.junit.jupiter:junit-jupiter-params:5.3.1'
 
 
 # DB 연동
@@ -156,10 +167,10 @@ main/webapp/WEB-INF/views
 - 스프링 MVC를 이용하기 위해 build.gradle 파일에 spring-webmvc 관련 라이브러리를 추가
 
 1) ServletConfig 클래스 작성 (웹과 관련된 설정)
-- ServletConfig 클래스는 기존 스프링 MVC 관련 기본적 설정을 추가 (WebMvcConfigurationSupport라는 클래스를 상속하는 형태로 구현)
-- WebMvcConfigurationSupport 클래스를 상속하는 것만으로 해당 클래스가 스프링 MVC관련 설정이라는 것을 명시 (경우에 따라서 @EnableWebMvc 라는 어노테이션을 지정하는 방식을 사용하기도 함)
+- ServletConfig 클래스는 기존 스프링 MVC 관련 기본적 설정을 추가 (WebMvcConfigurer 라는 인터페이스를 상속하는 형태로 구현)
+- WebMvcConfigurer 라는 인터페이스를 상속하는 것만으로 해당 클래스가 스프링 MVC관련 설정이라는 것을 명시 (경우에 따라서 @EnableWebMvc 라는 어노테이션을 지정하는 방식을 사용하기도 함)
 - 화면 처리하는 방식의 설정, 정적인 자원들의 기본 경로 지정 설정
-- 부모 클래스인 WebMvcConfigurationSupport의 여러 메소드들 중 mvcViewResolver()는 JSP나 Thymeleaf와 같은 View와 관련된 기술들을 어떻게 처리할 것인지 지정
+- 여러 메소드 중 configureViewResolvers()는 JSP나 Thymeleaf와 같은 View와 관련된 기술들을 어떻게 처리할 것인지 지정
 - addResourceHandlers()는 주로 이미지나 .js파일, .css파일과 같이 정적인 자원들의 경로를 지정하는 역할
 
 2) web.xml 대신하기 (WebConfig.java 작성)
