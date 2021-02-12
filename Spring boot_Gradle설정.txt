@@ -142,6 +142,19 @@ implementation 'org.junit.jupiter:junit-jupiter-params:5.3.1'
 - 테스트 코드를 실행하면 상당히 많은 양의 로그가 출력되기 때문에 개발 초기엔 좋지만 나중엔 불편해서 로그 레벨 수정 필요
 
 
+# mybatis-config.xml 설정하기
+- MyBatis는 SQL Mapping 프레임워크로 별도 설정 파일을 가질 수 있음
+- src/main/resources에 mybatis-config.xml 파일 추가
+1) XML과 DTD 선언
+2) typeAlias 사용
+- SQL Mapper 파일에서 parameterType이나 resultType을 지정할 때 긴 이름의 클래스명 대신 짧은 이름의 alias를 사용할 수 있음
+3) 카멜 케이스 적용
+- mapUnderscoreToCamelCase true 설정하면 데이터베이스 컬럼명이 REC_NO일 경우 recNo으로 자동 매핑됨
+- jdbcTypeForNull NULL 설정하면 쿼리에 보내는 파라미터가 null인 경우 오류 발생하는 것을 방지
+
+=> xml 설정 후  RootConfig에 SQLSessionFactory 설정에서 sessionFactory.setConfigLocation() set해주기!!
+
+
 
 # 스프링 MVC 프로젝트의 내부구조
 
@@ -188,6 +201,8 @@ implementation 'org.junit.jupiter:junit-jupiter-params:5.3.1'
 - 일반 스프링 설정 정보를 가진 클래스를 반환하는 getRootConfigclasses() => 리턴시 RootConfig.class를 반환
 - 스프링 MVC의 설정 클래스를 반환하는 getServletConfigClasses() => 리턴시 ServletConfig.class를 반환
 - Front Controller의 경로를 지정하는 getServletMappings() => '/'경로 이용
+
+
 
 # 스프링 컨트롤러 만들기
 - 컨트롤러를 스프링 MVC에서 빈(Bean)으로 인식하기 위해 ServletConfig 클래스를 이용해 @Controller 어노테이션을 인식하도록 수정
@@ -243,7 +258,7 @@ implementation 'org.junit.jupiter:junit-jupiter-params:5.3.1'
 - 리소스 맵핑 하기 (ServletConfig 클래스에서 addResourceHandlers메소드 경로 설정)
 - resources 폴더 안에 넣고, <head>쪽에 <script src=""> 넣어주기 / css는 <link rel="stylesheet" href=""> 로 설정
 
-
+# log 파일 만들기
 
 
 =======================================================================================================
