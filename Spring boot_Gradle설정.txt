@@ -12,6 +12,10 @@ war {
 }
 
 
+# Gradle로 bootRun 할 때 콘솔 한글이 꺠지는 경우에 Preference => Gradle에 JVM Arguments에 "-Dfile.encoding=UTF-8" 추가하기
+
+
+
 # 필요 라이브러리 추가
 
 # DB 연동
